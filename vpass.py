@@ -35,14 +35,26 @@ passwords = [
     }
 ]
 
+def from_formFields(form1, form2):
+    if form1.validate_on_submit():
+        flash(f'Password with a description of {form1.description.data} has been created successfully!', 'success')
+        return redirect(url_for('dashboard'))
+    if form2.validate_on_submit():
+        flash(f'You have been logged in successfully!', 'success')
+        return redirect(url_for('dashboard'))
+
 @app.route('/')
 @app.route('/home', methods=["GET", "POST"])
-def home():
-    form = PasswordForm()
-    if form.validate_on_submit():
-        flash(f'Password with a description of {form.description.data} has been created successfully!', 'success')
+def home(): 
+    form1 = PasswordForm()
+    form2 = LoginForm()
+    if form1.validate_on_submit():
+        flash(f'Password with a description of {form1.description.data} has been created successfully!', 'success')
         return redirect(url_for('dashboard'))
-    return render_template('home.html', form=form)
+    if form2.validate_on_submit():
+        flash(f'You have been logged in successfully!', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('home.html', form1=form1, form2=form2)
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -63,11 +75,15 @@ def register():
 
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
-    form = PasswordForm()
-    if form.validate_on_submit():
-        flash(f'Password with a description of {form.description.data} has been created successfully!', 'success')
+    form1 = PasswordForm()
+    form2 = LoginForm()
+    if form1.validate_on_submit():
+        flash(f'Password with a description of {form1.description.data} has been created successfully!', 'success')
         return redirect(url_for('dashboard'))
-    return render_template('dashboard.html', title='User Dashboard', passwords=passwords, form=form)
+    if form2.validate_on_submit():
+        flash(f'You have been logged in successfully!', 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('dashboard.html', title='User Dashboard', passwords=passwords, form1=form1, form2=form2)
 
 @app.route('/create_password', methods=['GET', 'POST'])
 def create_password():
