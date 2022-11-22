@@ -1,0 +1,10 @@
+body::before {
+    display: block;
+    content: '';
+    height: 40px
+}
+@media (min-width: 768px) {
+    .password-input {
+        width: 50%;
+    }
+}

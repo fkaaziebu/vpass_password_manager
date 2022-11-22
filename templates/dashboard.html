@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="p-5">
+        <div class="container">
+            <div class="row row-cols-md-2 text-center gy-5">
+                {% for password in passwords %}
+                    <div class="col-md">
+                        <div class="card bg-dark text-light">
+                            <div class="card-body text-center">
+                                <h3 class="card-title mb-3">
+                                    {{ password.content.password_description }}
+                                </h3>
+                                <div class="input-group pb-3">
+                                    <input type="text" class="form-control" placeholder="{{ password.content.password[0] + '*'*(13) + password.content.password[-1] }}" disabled readonly>
+                                    <button class="btn btn-secondary btn-md" type="button">Show Password</button>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <a href="#" class="btn btn-primary me-2">Delete Account</a>
+                                    <a href="#" class="btn btn-secondary">Set Reminder</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock content %}
